@@ -2,11 +2,12 @@
 	"name": "minecraft-assets-helper",
 	"displayName": "minecraft-assets-helper",
 	"description": "",
-	"version": "0.0.1",
+	"version": "1.0.1",
 	"engines": {
 		"vscode": "^1.52.0"
 	},
 	"categories": [
+		"Linters",
 		"Other"
 	],
 	"activationEvents": [
@@ -14,6 +15,30 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+        "languages": [{
+            "id": "json",
+            "extensions": [
+                "mcmeta"
+            ]
+		}],
+		"jsonValidation": [
+            {
+                "fileMatch": "pack.mcmeta",
+                "url": "./src/linters/pack.mcmeta.json"
+            },
+            {
+                "fileMatch": "assets/**/blockstates/*.json",
+                "url": "./src/linters/blockstates.json"
+            },
+            {
+                "fileMatch": "assets/**/models/block/*.json",
+                "url": "./src/linters/models-block.json"
+            },
+            {
+                "fileMatch": "assets/**/models/item/*.json",
+                "url": "./src/linters/models-item.json"
+            }
+        ],
 		"commands": []
 	},
 	"scripts": {

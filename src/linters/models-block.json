@@ -1,0 +1,327 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "$id": "https://raw.githubusercontent.com/haima16/texture-json/master/src/models-block.json",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "__comment": {
+            "type": "string",
+            "description": "注释"
+        },
+        "parent": {
+            "type": "string",
+            "title": "parent 父级",
+            "description": "继承其他模型文件，格式为命名空间ID。如果同时设置了parent和elements，那么此模型的elements标签将覆盖父类模型parent下的elements标签"
+        },
+        "ambientocclusion": {
+            "type": "boolean",
+            "title": "ambient occlusion 环境遮挡",
+            "description": "是否使用环境遮挡，默认为true。如果设置了parent，则其父模型的ambientocclusion标签会覆盖该模型的ambientocclusion标签"
+        },
+        "display": {
+            "title": "display 显示",
+            "description": "列出物品模型于不同位置下的显示设置",
+            "$ref": "#/definitions/positionProps"
+        },
+        "textures": {
+            "type": "object",
+            "title": "textures 纹理",
+            "description": "定义方块颗粒的材质以及模型所使用的材质变量。键值可以为材质文件的路径，格式为命名空间ID，也可以为另一个材质变量",
+            "properties": {
+                "__comment": {
+                    "type": "string",
+                    "description": "注释"
+                },
+                "particle": {
+                    "type": "string",
+                    "description": "方块对应的颗粒的材质。玩家在下界传送门中时也会使用此材质。注意：所有非模型渲染的方块的破坏可以为硬编码"
+                },
+                "additionalProperties": {
+                    "type": "string",
+                    "description": "定义一个材质变量"
+                }
+            }
+        },
+        "elements": {
+            "type": "array",
+            "title": "elements 元素",
+            "minItems": 1,
+            "description": "列出模型的所有元素,这些元素只能为长方体形态。如果同时设置了parent和elements，此模型的elements标签将覆盖父类模型parent下的elements标签",
+            "items": {
+                "$ref": "#/definitions/element"
+            }
+        }
+    },
+    "definitions": {
+        "positionProps": {
+            "type": "object",
+            "description": "列出物品模型于不同位置下的显示设置",
+            "additionalProperties": false,
+            "properties": {
+                "__comment": {
+                    "description": "注释",
+                    "type": "string"
+                },
+                "thirdperson_righthand": {
+                    "description": "指的是当被放到第三人称右手上时",
+                    "$ref": "#/definitions/position"
+                },
+                "thirdperson_lefthand": {
+                    "description": "指的是当被放到第三人称左手上时",
+                    "$ref": "#/definitions/position"
+                },
+                "firstperson_righthand": {
+                    "description": "指的是当被放到第一人称右手上时",
+                    "$ref": "#/definitions/position"
+                },
+                "firstperson_lefthand": {
+                    "description": "指的是当被放到第一人称左手上时",
+                    "$ref": "#/definitions/position"
+                },
+                "gui": {
+                    "description": "指的是当被放到容器时",
+                    "$ref": "#/definitions/position"
+                },
+                "head": {
+                    "description": "指的是当被放到头部时",
+                    "$ref": "#/definitions/position"
+                },
+                "ground": {
+                    "description": "指的是当被放到地上时",
+                    "$ref": "#/definitions/position"
+                },
+                "fixed": {
+                    "description": "指的是当被摆放在物品展示框上时，其他的显示位置如同其名。值得注意的是平移优先于旋转",
+                    "$ref": "#/definitions/position"
+                }
+            }
+        },
+        "position": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "rotation": {
+                    "title": "rotation 旋转",
+                    "description": "根据[x, y, z]格式，使模型相对于对应轴进行旋转",
+                    "$ref": "#/definitions/vector3"
+                },
+                "translation": {
+                    "title": "translation 移动",
+                    "description": "根据[x, y, z]格式，使模型相对于对应轴进行移动。如果值大于80，会作为80处理，小于-80时则看作-80",
+                    "$ref": "#/definitions/vector3"
+                },
+                "scale": {
+                    "title": "scale 缩放",
+                    "description": "根据[x, y, z]格式，使模型相对于对应轴进行缩放。当值大于4时，效果等同于4",
+                    "$ref": "#/definitions/vector3"
+                }
+            }
+        },
+        "vector3": {
+            "type": "array",
+            "additionalItems": false,
+            "minItems": 3,
+            "maxItems": 3,
+            "items": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "number"
+                }
+            ]
+        },
+        "vector3-1632": {
+            "type": "array",
+            "additionalItems": false,
+            "minItems": 3,
+            "maxItems": 3,
+            "items": [
+                {
+                    "type": "number",
+                    "minimum": -16,
+                    "miximum": 32
+                },
+                {
+                    "type": "number",
+                    "minimum": -16,
+                    "miximum": 32
+                },
+                {
+                    "type": "number",
+                    "minimum": -16,
+                    "miximum": 32
+                }
+            ]
+        },
+        "axis": {
+            "type": "string",
+            "enum": ["x", "y", "z"]
+        },
+        "angle": {
+            "type": "number",
+            "multipleOf": 22.5,
+            "minimum": -45,
+            "miximum": 45
+        },
+        "faceType": {
+            "description": "指定当方块的指定面被渲染不透明方块覆盖时，父标签所定义的面是否不渲染。指定的面可以为：down, up, north, south, west, 或 east。也就是说，指定渲染时把这个面视为方块的哪一个表面。同时，该面面的亮度计算等同于方块的指定面",
+            "type": "string",
+            "enum": [
+                "east",
+                "south",
+                "west",
+                "north",
+                "up",
+                "down"
+            ]
+        },
+        "vector22": {
+            "description": "根据[x1, y1, x2, y2]格式，指定所使用的材质图片的区域。如果未设置，它的默认值等于元素的xyz位置。若此值低于0或高于16，则材质显示将会不正常。若x1和x2坐标对调，材质也将会被翻转",
+            "type": "array",
+            "additionalItems": false,
+            "minItems": 4,
+            "maxItems": 4,
+            "items": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "number"
+                }
+            ]
+        },
+        "faceProps": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "uv": { 
+                    "$ref": "#/definitions/vector22"
+                },
+                "texture": {
+                    "description": "指定所使用的材质变量，变量前加上#。材质变量于上文的材质变量名定义",
+                    "type": "string",
+                    "title": "texture 纹理",
+                    "pattern": "^#.+"
+                },
+                "cullface": {
+                    "title": "cullface 表面",
+                    "description": "指定当方块的指定面被渲染不透明方块覆盖时，父标签所定义的面是否不渲染",
+                    "$ref": "#/definitions/faceType"
+                },
+                "rotation": {
+                    "title": "rotation 旋转",
+                    "description": "根据特定的角度旋转材质。可以为0，90，180或270。默认为0。旋转不会影响到uv所指定的材质部分，而是此部分的旋转角度",
+                    "type": "number",
+                    "enum": [0, 90, 180, 270]
+                },
+                "tintindex": {
+                    "description": "是否使用硬编码对该材质进行重新着色。默认不使用着色和任何着色数值。注意只有特定方块可以着色，其他方块设置此项无效",
+                    "type": "boolean"
+                }
+            }
+        },
+        "element": {
+            "type": "object",
+            "title": "element 元素",
+            "description": "定义一个元素",
+            "additionalProperties": false,
+            "required": ["from", "to", "faces"],
+            "properties": {
+                "__comment": {
+                    "type": "string",
+                    "description": "注释"
+                },
+                "from": {
+                    "title": "from 起始位置",
+                    "description": "根据[x, y, z]格式，指定一个长方体的起始点。数值必须为-16到32之间",
+                    "$ref": "#/definitions/vector3-1632"
+                },
+                "to": {
+                    "title": "to 结束位置",
+                    "description": "根据[x, y, z]格式，指定一个长方体的结束点。数值必须为-16到32之间",
+                    "$ref": "#/definitions/vector3-1632"
+                },
+                "rotation": {
+                    "type": "object",
+                    "title": "rotation 旋转",
+                    "additionalProperties": false,
+                    "description": "设置元素的旋转",
+                    "properties": {
+                        "origin": {
+                            "title": "origin 旋转中心",
+                            "description": "根据坐标[x, y, z]设置旋转中心",
+                            "$ref": "#/definitions/vector3"
+                        },
+                        "axis": {
+                            "title": "axis 旋转轴",
+                            "description": "旋转的一个且只能为一个轴，可以为x，y或z",
+                            "$ref": "#/definitions/axis"
+                        },
+                        "angle": {
+                            "title": "angle 旋转角",
+                            "description": "旋转的角度。可以为45到-45度，以22.5度为增量",
+                            "$ref": "#/definitions/angle"
+                        },
+                        "rescale": {
+                            "title": "rescale 缩放",
+                            "description": "是否缩放为整个长方体大小，默认false",
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "shade": {
+                    "title": "shade 阴影",
+                    "description": "是否渲染阴影，默认true",
+                    "type": "boolean"
+                },
+                "faces": {
+                    "title": "faces 面",
+                    "description": "包含单个element的所有面。若有一个面没有定义，则不渲染此面",
+                    "type": "object",
+                    "properties": {
+                        "east": {
+                            "title": "east 东面",
+                            "description": "面向东侧的面，x轴正方向",
+                            "$ref": "#/definitions/faceProps"
+                        },
+                        "south": {
+                            "title": "south 南面",
+                            "description": "面向南侧的面，z轴正方向",
+                            "$ref": "#/definitions/faceProps"
+                        },
+                        "west": {
+                            "title": "west 西面",
+                            "description": "面向西侧的面，x轴负方向",
+                            "$ref": "#/definitions/faceProps"
+                        },
+                        "north": {
+                            "title": "north 北面",
+                            "description": "面向北侧的面，z轴负方向",
+                            "$ref": "#/definitions/faceProps"
+                        },
+                        "up": {
+                            "title": "up 上面",
+                            "description": "面向上侧的面，y轴正方向",
+                            "$ref": "#/definitions/faceProps"
+                        },
+                        "down": {
+                            "title": "down 底面",
+                            "description": "面向底侧的面，y轴负方向",
+                            "$ref": "#/definitions/faceProps"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

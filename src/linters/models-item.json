@@ -1,0 +1,175 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "$id": "https://raw.githubusercontent.com/haima16/texture-json/master/src/models-item.json",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "__comment": {
+            "description": "注释",
+            "type": "string"
+        },
+        "parent": {
+            "title": "parent 父级",
+            "description": "继承其他模型文件，格式为命名空间ID。如果同时设置了parent和elements，那么此模型的elements标签将覆盖父类模型parent下的elements标签",
+            "type": "string"
+        },
+        "display": {
+            "title": "display 显示",
+            "$ref": "./models-block.json#/definitions/positionProps"
+        },
+        "textures": {
+            "type": "object",
+            "title": "textures 纹理",
+            "description": "定义方块颗粒的材质以及模型所使用的材质变量。键值可以为材质文件的路径，格式为命名空间ID，也可以为另一个材质变量",
+            "properties": {
+                "__comment": {
+                    "type": "string",
+                    "description": "注释"
+                },
+                "particle": {
+                    "title": "particle 粒子",
+                    "description": "方块对应的颗粒的材质。玩家在下界传送门中时也会使用此材质。注意：所有非模型渲染的方块的破坏可以为硬编码",
+                    "type": "string"
+                }
+            },
+            "patternProperties": {
+                "^layer[0-9]{1,}$": {
+                    "description": "仅用于指定在物品栏内使用的物品的图标。允许有超过一层（比如刷怪蛋），但是每个物品可能的层数都是硬编码的。必须结合builtin/generated用",
+                    "type": "string"
+                }
+            },
+            "additionalProperties": {
+                "description": "定义一个材质变量并分配材质",
+                "type": "string"
+            }
+        },
+        "elements": {
+            "title": "elements 元素",
+            "description": "列出模型的所有元素,这些元素只能为长方体形态。如果同时设置了parent和elements，此模型的elements标签将覆盖父类模型parent下的elements标签",
+            "type": "array",
+            "minimum": 1,
+            "items": {
+                "$ref": "./models-block.json#/definitions/element"
+            }
+        },
+        "gui_light": {
+            "title": "gui_light",
+            "description": "仅在gui中使用。可以是front或side。设为side，模型会被渲染为长方体形状。设为front，模型会以平面材质填满一整格",
+            "type": "string",
+            "enum": ["side", "front"]
+        },
+        "overrides": {
+            "title": "overrides",
+            "description": "指定基于物品情况标签而覆写不同模型的情况。所有情况都按从上到下的顺序进行检测，直到有完全匹配的谓词。但是，如果已经被覆写过一次，则会忽略覆写，这可以避免在覆写到同一模型时出现递归",
+            "type": "array",
+            "minimum": 1,
+            "items": {
+                "additionalProperties": false,
+                "type": "object",
+                "required": ["predicate", "model"],
+                "properties": {
+                    "__comment": {
+                        "type": "string",
+                        "description": "注释"
+                    },
+                    "predicate": {
+                        "title": "predicate 断言",
+                        "description": "指定情况",
+                        "type": "object",
+                        "properties": {
+                            "__comment": {
+                                "type": "string",
+                                "description": "注释"
+                            },
+                            "angle": {
+                                "title": "angle 角度",
+                                "description": "判断指南针的角度，以十进制小于1的数值表达",
+                                "type": "number"
+                            },
+                            "blocking": {
+                                "title": "blocking 格挡",
+                                "description": "判断盾牌是否为格挡状态。格挡时为1",
+                                "type": "number",
+                                "enum": [0, 1]
+                            },
+                            "broken": {
+                                "title": "blocking 破损",
+                                "description": "判断鞘翅是否破损。破损时为1",
+                                "type": "number",
+                                "enum": [0, 1]
+                            },
+                            "cast": {
+                                "title": "cast 抛掷",
+                                "description": "判断钓鱼竿是否已抛出。已抛出时为1",
+                                "type": "number",
+                                "enum": [0, 1]
+                            },
+                            "cooldown": {
+                                "title": "cooldown 冷却",
+                                "description": "判断末影珍珠/紫颂果的剩余冷却时间，以十进制、0到1之间的数值表达",
+                                "type": "number",
+                                "maximum": 1,
+                                "minimum": 0
+                            },
+                            "damage": {
+                                "title": "damage 损伤值",
+                                "description": "判断拥有耐久值的物品的已受损程度，以十进制、0到1之间的数值表达",
+                                "type": "number",
+                                "maximum": 1,
+                                "minimum": 0
+                            },
+                            "damaged": {
+                                "title": "damage 受损",
+                                "description": "判断拥有耐久值的物品是否为已受损状态。已受损时为1。若物品拥有Unbreakable标签时，此数值为0，且damage标签的数值可以不为0",
+                                "type": "number",
+                                "maximum": 1,
+                                "minimum": 0
+                            },
+                            "lefthanded": {
+                                "title": "lefthanded",
+                                "description": "指定被左手玩家使用的模型，会影响其在物品栏的显示样式，以及玩家拿起或穿在身上时的视觉样式",
+                                "type": "string"
+                            },
+                            "pull": {
+                                "title": "pull 拉伸",
+                                "description": "判断弓被拉伸的程度，以十进制，0到1之间的数值表达。没被拉伸时为0，被完全拉伸时为1",
+                                "type": "number",
+                                "maximum": 1,
+                                "minimum": 0
+                            },
+                            "pulling": {
+                                "title": "pull 拉伸状态",
+                                "description": "判断弓是否被拉伸。被拉伸时为1",
+                                "type": "number",
+                                "enum": [0, 1]
+                            },
+                            "throwing": {
+                                "title": "throwing 投掷状态",
+                                "description": "用于三叉戟以判断三叉戟是否即将被玩家扔出。如果为1，则三叉戟准备扔出",
+                                "type": "number",
+                                "enum": [0, 1]
+                            },
+                            "time": {
+                                "title": "time 时间",
+                                "description": "判断时钟的时间，以十进制，0到1之间的数值表达",
+                                "type": "number",
+                                "maximum": 1,
+                                "minimum": 0
+                            },
+                            "custom_model_data": {
+                                "title": "custom_model_data 自定义模型",
+                                "description": "用于使用自定义模型的物品，用整数表达",
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    "model": {
+                        "title": "model 模型",
+                        "description": "当符合情况时使用的模型文件的路径，格式为命名空间ID",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
