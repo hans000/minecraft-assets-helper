@@ -7,19 +7,19 @@ export default (document: vscode.TextDocument, position: vscode.Position) => {
         const word = document.getText(document.getWordRangeAtPosition(position))
         const json = document.getText()
         // textures
-        if (new RegExp(`"textures":\\s*?\\{[\\s\\S]*?${word.replace('/', '\\/')}[\\s\\S]*?\\}`, 'gm').test(json)) {
+        if (new RegExp(`"textures"\\s*?:\\s*?\\{[\\s\\S]*?${word.replace('/', '\\/')}[\\s\\S]*?\\}`, 'gm').test(json)) {
             const name = word.startsWith('"minecraft:') ? word.slice(11, -1) : word.slice(1, -1)
             const distName = `${blockMatch[1]}/textures/${name}.png`
             if (fs.existsSync(distName)) {
-                return new vscode.Location(vscode.Uri.file(distName), position)
+                return new vscode.Location(vscode.Uri.file(distName), new vscode.Position(0, 0))
             }
         }
         // parent
-        if (new RegExp(`"parent":\\s*?[\\s\\S]*?${word.replace('/', '\\/')}[\\s\\S]*?\\}`, 'gm').test(json)) {
+        if (new RegExp(`"parent"\\s*?:\\s*?[\\s\\S]*?${word.replace('/', '\\/')}[\\s\\S]*?\\}`, 'gm').test(json)) {
             const name = word.startsWith('"minecraft:') ? word.slice(11, -1) : word.slice(1, -1)
             const distName = `${blockMatch[1]}/models/${name}.json`
             if (fs.existsSync(distName)) {
-                return new vscode.Location(vscode.Uri.file(distName), position)
+                return new vscode.Location(vscode.Uri.file(distName), new vscode.Position(0, 0))
             }
         }
     }
@@ -27,11 +27,11 @@ export default (document: vscode.TextDocument, position: vscode.Position) => {
     if (stateMatch) {
         const word = document.getText(document.getWordRangeAtPosition(position))
         const json = document.getText()
-        if (new RegExp(`"model":\\s*?[\\s\\S]*?${word.replace('/', '\\/')}[\\s\\S]*?\\}`, 'gm').test(json)) {
+        if (new RegExp(`"model"\\s*?:\\s*?[\\s\\S]*?${word.replace('/', '\\/')}[\\s\\S]*?\\}`, 'gm').test(json)) {
             const name = word.startsWith('"minecraft:') ? word.slice(11, -1) : word.slice(1, -1)
             const distName = `${stateMatch[1]}/models/${name}.json`
             if (fs.existsSync(distName)) {
-                return new vscode.Location(vscode.Uri.file(distName), position)
+                return new vscode.Location(vscode.Uri.file(distName), new vscode.Position(0, 0))
             }
         }
     }
@@ -39,11 +39,11 @@ export default (document: vscode.TextDocument, position: vscode.Position) => {
     if (particleMatch) {
         const word = document.getText(document.getWordRangeAtPosition(position))
         const json = document.getText()
-        if (new RegExp(`"textures":\\s*?\\[[\\s\\S]*?${word.replace('/', '\\/')}[\\s\\S]*?\\]`, 'gm').test(json)) {
+        if (new RegExp(`"textures"\\s*?:\\s*?\\[[\\s\\S]*?${word.replace('/', '\\/')}[\\s\\S]*?\\]`, 'gm').test(json)) {
             const name = word.startsWith('"minecraft:') ? word.slice(11, -1) : word.slice(1, -1)
             const distName = `${particleMatch[1]}/textures/particle/${name}.png`
             if (fs.existsSync(distName)) {
-                return new vscode.Location(vscode.Uri.file(distName), position)
+                return new vscode.Location(vscode.Uri.file(distName), new vscode.Position(0, 0))
             }
         }
     }
