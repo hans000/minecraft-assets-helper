@@ -1,6 +1,6 @@
 # minecraft assets helper
 
-Help cber develop quickly datapack
+This extension features that can be used to improve productivity for CBer.
 
 ## Features
 
@@ -10,7 +10,7 @@ Help cber develop quickly datapack
 
 ## Install
 
-You can install it from the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=SPGoding.datapack-language-server)
+You can install it from the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=)
 
 ## Completions
 
