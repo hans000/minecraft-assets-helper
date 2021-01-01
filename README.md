@@ -1,6 +1,6 @@
-# minecraft-assets-helper
+# minecraft assets helper
 
-This is the README for your extension "minecraft-assets-helper". After writing up a brief description, we recommend including the following sections.
+Help cber develop quickly datapack
 
 ## Features
 
