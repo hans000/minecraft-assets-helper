@@ -18,18 +18,18 @@ The extension can compute completions as you typing commands. Completions will a
 
 Alternatively you can use `Ctrl + Space` (or other configured hotkey) to show completions manually.
 
-![completion](.\assets\completion.gif)
+![completion](./assets/completion.gif)
 
 ## Goto Definitions
 
 You can goto the definitions of textures and models in the workspace by `Ctrl-clicking` on their names.
 
-![definition](.\assets\definition.gif)
+![definition](./assets/definition.gif)
 
 ## Validator
 
 It can help you verify the validity of the JSON file and display error messages and suggestions.
 
-![validitor](.\assets\validitor.gif)
+![validitor](./assets/validitor.gif)
 
 **Enjoy!**
