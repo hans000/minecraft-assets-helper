@@ -1,7 +1,8 @@
 {
 	"name": "minecraft-assets-helper",
 	"displayName": "minecraft-assets-helper",
-	"description": "",
+	"publisher": "hans000",
+	"description": "Help cber develop quickly datapack",
 	"version": "1.0.1",
 	"engines": {
 		"vscode": "^1.52.0"
@@ -10,6 +11,9 @@
 		"Linters",
 		"Other"
 	],
+	"repository": {
+	  "url": "https://github.com/hans000/mc-json-viewer.git"
+	},
 	"activationEvents": [
 		"*"
 	],
