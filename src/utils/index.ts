@@ -12,13 +12,12 @@ export const trimNamespace = (path: string) => {
     return path.slice(path.lastIndexOf(':') + 1)
 }
 
-export const parseLineText = (lineText: string, keyword?: string) => {
-    const reg = new RegExp(`"${keyword ? keyword : '.+?'}"\\s*:\\s*("(.+:)?(.+))?`)
-    const m = reg.exec(lineText)
+export const parsePath = (word: string) => {
+    const m = /(.+:)?(.+)/.exec(word)
     if (m) {
         return [
-            m[2] ? m[2] : 'minecraft', 
-            m[3] ? m[3] : ''
+            m[1] ? m[1] : 'minecraft', 
+            m[2] ? m[2] : ''
         ]
     }
     return null
