@@ -2,7 +2,7 @@
 	"name": "minecraft-assets-helper",
 	"displayName": "minecraft-assets-helper",
 	"publisher": "hans000",
-	"description": "Help cber develop quickly datapack",
+	"description": "This extension features that can be used to improve productivity for CBer.",
 	"version": "1.0.1",
 	"engines": {
 		"vscode": "^1.52.0"
@@ -12,7 +12,7 @@
 		"Other"
 	],
 	"repository": {
-	  "url": "https://github.com/hans000/mc-json-viewer.git"
+	  "url": "https://github.com/hans000/minecraft-assets-helper.git"
 	},
 	"activationEvents": [
 		"*"
