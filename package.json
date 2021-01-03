@@ -28,19 +28,19 @@
 		"jsonValidation": [
             {
                 "fileMatch": "pack.mcmeta",
-                "url": "./src/linters/pack.mcmeta.json"
+                "url": "./assets/linters/pack.mcmeta.json"
             },
             {
                 "fileMatch": "assets/**/blockstates/*.json",
-                "url": "./src/linters/blockstates.json"
+                "url": "./assets/linters/blockstates.json"
             },
             {
                 "fileMatch": "assets/**/models/block/*.json",
-                "url": "./src/linters/models-block.json"
+                "url": "./assets/linters/models-block.json"
             },
             {
                 "fileMatch": "assets/**/models/item/*.json",
-                "url": "./src/linters/models-item.json"
+                "url": "./assets/linters/models-item.json"
             }
         ],
 		"commands": []
