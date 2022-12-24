@@ -1,8 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft-07/schema",
-    "$id": "https://raw.githubusercontent.com/haima16/texture-json/master/src/models-block.json",
     "type": "object",
-    "additionalProperties": false,
     "properties": {
         "__comment": {
             "type": "string",
@@ -35,8 +33,14 @@
                 "particle": {
                     "type": "string",
                     "description": "方块对应的颗粒的材质。玩家在下界传送门中时也会使用此材质。注意：所有非模型渲染的方块的破坏可以为硬编码"
+                }
+            },
+            "patternProperties": {
+                "^layer[0-9]{1,}$": {
+                    "type": "string",
+                    "description": "仅用于指定在物品栏内使用的物品的图标。允许有超过一层（比如刷怪蛋），但是每个物品可能的层数都是硬编码的。必须结合builtin/generated用"
                 },
-                "additionalProperties": {
+                "^.+$": {
                     "type": "string",
                     "description": "定义一个材质变量"
                 }
@@ -50,13 +54,37 @@
             "items": {
                 "$ref": "#/definitions/element"
             }
+        },
+        "credit": {
+            "type": "string",
+            "title": "著作声明",
+            "description": "模型的著作声明"
+        },
+        "texture_size": {
+            "$ref": "./models-blockbench.json#/definitions/vector2",
+            "title": "材质大小",
+            "description": "[x, y]为纹理分辨率。用于标识Blockbench中将要使用怎么样分辨率的uv编辑器。默认为16x16。当使用组合型uv或者扩大分辨率时会用到。"
+        },
+        "groups": {
+            "type": "array",
+            "title": "分组",
+            "description": "用于归并元素的组合，元素的组将显示在blockbench的右下方。列表的值为数字和{组对象}。这个数字是元素的组序号，也就是元素在\"elements\":[]列表中的序号",
+            "items": {
+                "oneOf": [
+                    {
+                        "type": "integer"
+                    },
+                    {
+                        "$ref": "./models-blockbench.json#/definitions/group-item"
+                    }
+                ]
+            }
         }
     },
     "definitions": {
         "positionProps": {
             "type": "object",
             "description": "列出物品模型于不同位置下的显示设置",
-            "additionalProperties": false,
             "properties": {
                 "__comment": {
                     "description": "注释",
@@ -98,8 +126,11 @@
         },
         "position": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
+                "__comment": {
+                    "type": "string",
+                    "description": "注释"
+                },
                 "rotation": {
                     "title": "rotation 旋转",
                     "description": "根据[x, y, z]格式，使模型相对于对应轴进行旋转",
@@ -202,7 +233,6 @@
         },
         "faceProps": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "uv": { 
                     "$ref": "#/definitions/vector22"
@@ -225,8 +255,8 @@
                     "enum": [0, 90, 180, 270]
                 },
                 "tintindex": {
-                    "description": "是否使用硬编码对该材质进行重新着色。默认不使用着色和任何着色数值。注意只有特定方块可以着色，其他方块设置此项无效",
-                    "type": "boolean"
+                    "description": "是否使用硬编码对该纹理进行重新着色。默认不使用着色和任何着色数值。注意只有特定方块可以着色，其他方块设置此项无效",
+                    "type": "number"
                 }
             }
         },
@@ -234,7 +264,6 @@
             "type": "object",
             "title": "element 元素",
             "description": "定义一个元素",
-            "additionalProperties": false,
             "required": ["from", "to", "faces"],
             "properties": {
                 "__comment": {
@@ -254,7 +283,6 @@
                 "rotation": {
                     "type": "object",
                     "title": "rotation 旋转",
-                    "additionalProperties": false,
                     "description": "设置元素的旋转",
                     "properties": {
                         "origin": {
@@ -289,6 +317,10 @@
                     "description": "包含单个element的所有面。若有一个面没有定义，则不渲染此面",
                     "type": "object",
                     "properties": {
+                        "__comment": {
+                            "type": "string",
+                            "description": "注释"
+                        },
                         "east": {
                             "title": "east 东面",
                             "description": "面向东侧的面，x轴正方向",

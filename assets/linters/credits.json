@@ -1,0 +1,50 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "type": "object",
+    "description": "提供著作声明",
+    "defaultSnippets": [
+        {
+            "label": "快速生成credits",
+            "prefix": "init",
+            "body": {
+                "section": "$1",
+                "titles": [
+                    {
+                        "title": "$2",
+                        "names": ["$3"]
+                    }
+                ]
+            }
+        }
+    ],
+    "properties": {
+        "section": {
+            "type": "string",
+            "title": "标题",
+            "description": "通常为部门名称，如“Design”“Programming”“Audio”等"
+        },
+        "titles": {
+            "type": "array",
+            "description": "职位列表",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "职位的名称，如“Technical Director”“Game Developers”“Software Engineers”等"
+                    },
+                    "names": {
+                        "type": "array",
+                        "description": "姓名列表",
+                        "items": {
+                            "type": "string",
+                            "description": "姓名"
+                        }
+                    }
+                },
+                "required": ["title", "names"]
+            }
+        }
+    },
+    "required": ["section", "titles"]
+}

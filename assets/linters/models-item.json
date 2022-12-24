@@ -1,8 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft-07/schema",
-    "$id": "https://raw.githubusercontent.com/haima16/texture-json/master/src/models-item.json",
     "type": "object",
-    "additionalProperties": false,
     "properties": {
         "__comment": {
             "description": "注释",
@@ -34,13 +32,13 @@
             },
             "patternProperties": {
                 "^layer[0-9]{1,}$": {
-                    "description": "仅用于指定在物品栏内使用的物品的图标。允许有超过一层（比如刷怪蛋），但是每个物品可能的层数都是硬编码的。必须结合builtin/generated用",
-                    "type": "string"
+                    "type": "string",
+                    "description": "仅用于指定在物品栏内使用的物品的图标。允许有超过一层（比如刷怪蛋），但是每个物品可能的层数都是硬编码的。必须结合builtin/generated用"
+                },
+                "^.+$": {
+                    "type": "string",
+                    "description": "定义一个材质变量"
                 }
-            },
-            "additionalProperties": {
-                "description": "定义一个材质变量并分配材质",
-                "type": "string"
             }
         },
         "elements": {
@@ -64,7 +62,6 @@
             "type": "array",
             "minimum": 1,
             "items": {
-                "additionalProperties": false,
                 "type": "object",
                 "required": ["predicate", "model"],
                 "properties": {
@@ -170,6 +167,47 @@
                     }
                 }
             }
+        },
+        "credit": {
+            "type": "string",
+            "title": "著作声明",
+            "description": "模型的著作声明"
+        },
+        "texture_size": {
+            "$ref": "./models-blockbench.json#/definitions/vector2",
+            "title": "材质大小",
+            "description": "[x, y]为纹理分辨率。用于标识Blockbench中将要使用怎么样分辨率的uv编辑器。默认为16x16。当使用组合型uv或者扩大分辨率时会用到。"
+        },
+        "groups": {
+            "type": "array",
+            "title": "分组",
+            "description": "用于归并元素的组合，元素的组将显示在blockbench的右下方。列表的值为数字和{组对象}。这个数字是元素的组序号，也就是元素在\"elements\":[]列表中的序号",
+            "items": {
+                "oneOf": [
+                    {
+                        "type": "integer"
+                    },
+                    {
+                        "$ref": "./models-blockbench.json#/definitions/group-item"
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "vector2": {
+            "type": "array",
+            "additionalItems": false,
+            "minItems": 2,
+            "maxItems": 2,
+            "items": [
+                {
+                    "type": "integer"
+                },
+                {
+                    "type": "integer"
+                }
+            ]
         }
     }
 }

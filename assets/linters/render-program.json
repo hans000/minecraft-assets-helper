@@ -1,0 +1,166 @@
+{
+    "type": "object",
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "properties": {
+        "__comment": {
+            "type": "string",
+            "description": "注释"
+        },
+        "blend": {
+            "type": "object",
+            "description": "OpenGL混合的设置",
+            "properties": {
+                "__comment": {
+                    "type": "string",
+                    "description": "注释"
+                },
+                "func": {
+                    "type": "string",
+                    "description": "混合时要使用的运算符",
+                    "enum": [
+                        "add",
+                        "subtract",
+                        "reversesubtract",
+                        "reverse_subtract",
+                        "min",
+                        "max"
+                    ]
+                },
+                "srcrgb": {
+                    "$ref": "#/definitions/rgb",
+                    "description": "用作glBlendFunc的sfactor参数或glBlendFuncSeparate的srcRGB参数"
+                },
+                "dstrgb": {
+                    "$ref": "#/definitions/rgb",
+                    "description": "用作glBlendFunc的dfactor参数或glBlendFuncSeparate的dstRGB参数"
+                },
+                "srcalpha": {
+                    "$ref": "#/definitions/rgb",
+                    "description": "用作glBlendFuncSeparate的srcalpha参数"
+                },
+                "dstalpha": {
+                    "$ref": "#/definitions/rgb",
+                    "description": "用作glBlendFuncSeparate的dstalpha参数"
+                }
+            }
+        },
+        "cull": {
+            "type": "boolean",
+            "description": "如果为true，则运行glEnable(GL_CULL_FACE)。如果为false，则运行glDisable(GL_CULL_FACE)"
+        },
+        "vertex": {
+            "type": "string",
+            "description": "要使用的顶点着色器的名称（不带文件扩展名）"
+        },
+        "fragment": {
+            "type": "string",
+            "description": "要使用的片段着色器的名称（不带文件扩展名）"
+        },
+        "attributes": {
+            "type": "array",
+            "description": "顶点着色器要使用的属性",
+            "items": {
+                "type": "string"
+            }
+        },
+        "samplers": {
+            "type": "array",
+            "description": "可以在着色器中使用的采样器列表",
+            "items": {
+                "type": "object",
+                "description": "采样器",
+                "properties": {
+                    "__comment": {
+                        "type": "string",
+                        "description": "注释"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "采样器名称"
+                    },
+                    "file": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "uniforms": {
+            "type": "array",
+            "description": "可以在着色器中使用的uniform列表",
+            "items": {
+                "type": "object",
+                "description": "uniform项",
+                "properties": {
+                    "__comment": {
+                        "type": "string",
+                        "description": "注释"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "GLSL代码中引用的uniform名称",
+                        "enum": [
+                            "Time",
+                            "InSize",
+                            "OutSize",
+                            "AuxSize",
+                            "ModelViewMat",
+                            "ProjMat",
+                            "TextureMat",
+                            "ScreenSize",
+                            "ColorModulator",
+                            "Light0_Direction",
+                            "Light1_Direction",
+                            "FogStart",
+                            "FogEnd",
+                            "FogColor",
+                            "LineWidth",
+                            "GameTime",
+                            "ChunkOffset"
+                        ]
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "uniform的类型",
+                        "enum": [
+                            "int",
+                            "float",
+                            "matrix4x4",
+                            "matrix3x3",
+                            "matrix2x2"
+                        ]
+                    },
+                    "count": {
+                        "type": "integer",
+                        "description": "values中包含的值的数目"
+                    },
+                    "values": {
+                        "type": "array",
+                        "description": "uniform的值，以浮点列表的形式给出。列表的长度应与count相同",
+                        "items": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "rgb": {
+            "type": "string",
+            "enum": [
+                "0",
+                "1",
+                "srccolor",
+                "1-srccolor",
+                "dstcolor",
+                "1-dstcolor",
+                "srcalpha",
+                "1-srcalpha",
+                "dstalpha",
+                "1-dstalpha",
+                "one",
+                "zero"
+            ]
+        }
+    }
+}

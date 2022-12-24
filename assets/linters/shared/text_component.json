@@ -1,6 +1,5 @@
 {
     "$schema": "https://json-schema.org/draft-07/schema",
-    "$id": "https://raw.githubusercontent.com/haima16/texture-json/master/src/shared/text_component.json",
     "$ref": "#/definitions/text_component",
     "definitions": {
         "text_component": {
@@ -84,7 +83,6 @@
                     "properties": {
                         "score": {
                             "title": "A score to display",
-                            "additionalProperties": false,
                             "type": "object",
                             "properties": {
                                 "name": {
@@ -310,7 +308,6 @@
                     }
                 }
             ],
-            "additionalProperties": false,
             "properties": {
                 "text": {},
                 "translate": {},
@@ -389,7 +386,6 @@
                     "type": "object",
                     "title": "Action on click",
                     "description": "Action to perform when this text is left clicked on",
-                    "additionalProperties": false,
                     "properties": {
                         "action": {},
                         "value": {}
@@ -467,7 +463,6 @@
                 },
                 "hoverEvent": {
                     "type": "object",
-                    "additionalProperties": false,
                     "description": "What to show upon a hover",
                     "properties": {
                         "action": {},

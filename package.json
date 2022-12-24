@@ -1,9 +1,9 @@
 {
 	"name": "minecraft-assets-helper",
-	"displayName": "minecraft-assets-helper",
+	"displayName": "Minecraft Assets Helper",
 	"publisher": "hans000",
 	"description": "This extension features that can be used to improve productivity for CBer.",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"engines": {
 		"vscode": "^1.52.0"
 	},
@@ -12,51 +12,123 @@
 		"Other"
 	],
 	"repository": {
-	  "url": "https://github.com/hans000/minecraft-assets-helper.git"
+		"url": "https://github.com/hans000/minecraft-assets-helper.git"
 	},
 	"activationEvents": [
 		"*"
 	],
-	"main": "./out/extension.js",
+	"main": "./out/client/index.js",
 	"contributes": {
-        "languages": [{
-            "id": "json",
-            "extensions": [
-                "mcmeta"
-            ]
-		}],
+		"languages": [
+			{
+				"id": "json",
+				"extensions": [
+					"mcmeta"
+				]
+			}
+		],
 		"jsonValidation": [
-            {
-                "fileMatch": "pack.mcmeta",
-                "url": "./assets/linters/pack.mcmeta.json"
-            },
-            {
-                "fileMatch": "assets/**/blockstates/*.json",
-                "url": "./assets/linters/blockstates.json"
-            },
-            {
-                "fileMatch": "assets/**/models/block/*.json",
-                "url": "./assets/linters/models-block.json"
-            },
-            {
-                "fileMatch": "assets/**/models/item/*.json",
-                "url": "./assets/linters/models-item.json"
-            }
-        ],
-		"commands": []
+			{
+				"fileMatch": "/pack.mcmeta",
+				"url": "./assets/linters/pack.mcmeta.json"
+			},
+			{
+				"fileMatch": "/assets/*/blockstates/*.json",
+				"url": "./assets/linters/blockstates.json"
+			},
+			{
+				"fileMatch": "/assets/*/models/block/*.json",
+				"url": "./assets/linters/models-block.json"
+			},
+			{
+				"fileMatch": "/assets/*/models/item/*.json",
+				"url": "./assets/linters/models-item.json"
+			},
+			{
+				"fileMatch": [
+					"/assets/*/models/**/*.json",
+					"!/assets/*/models/block/*.json",
+					"!/assets/*/models/item/*.json"
+				],
+				"url": "./assets/linters/models-blockbench.json"
+			},
+			{
+				"fileMatch": "/assets/*/textures/**/*.mcmeta",
+				"url": "./assets/linters/animation.json"
+			},
+			{
+				"fileMatch": "/assets/*/font/*.json",
+				"url": "./assets/linters/font.json"
+			},
+			{
+				"fileMatch": "/assets/*/texts/credits.json",
+				"url": "./assets/linters/credits.json"
+			},
+			{
+				"fileMatch": [
+					"/assets/*/shaders/core/*.json",
+					"/assets/*/shaders/program/*.json"
+				],
+				"url": "./assets/linters/render-program.json"
+			},
+			{
+				"fileMatch": "/assets/*/shaders/post/*.json",
+				"url": "./assets/linters/render-pipline.json"
+			},
+			{
+				"fileMatch": [
+					"/assets/*/textures/entity/villager/*.json",
+					"/assets/*/textures/entity/zombie_villager/*.json"
+				],
+				"url": "./assets/linters/villager.json"
+			},
+			{
+				"fileMatch": "/assets/*/regional_compliancies.json",
+				"url": "./assets/linters/regional-compliancies.json"
+			},
+			{
+				"fileMatch": "/assets/*/sounds/*.json",
+				"url": "./assets/linters/sound.json"
+			}
+		],
+		"configuration": {
+			"title": "Assets Helper",
+			"type": "object",
+			"properties": {
+				"assetsHelper.clientJarFiles": {
+					"type": "array",
+					"description": "minecraft or mod jar file",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"commands": [
+			{
+				"category": "Assets Helper",
+				"command": "assetsHelper.commands.createCachedFiles",
+				"title": "create cached files"
+			}
+		]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
+		"compile": "tsc -b",
+		"watch": "tsc -b -w",
 		"pretest": "npm run compile && npm run lint",
-		"lint": "eslint src --ext ts",
-		"test": "node ./out/test/runTest.js"
+		"lint": "eslint ./client/ ./server/ --ext .ts,.tsx"
+	},
+	"dependencies": {
+		"jszip": "^3.10.1",
+		"vscode-languageclient": "^8.0.2",
+		"vscode-languageserver": "^8.0.2",
+		"vscode-languageserver-textdocument": "^1.0.8"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",
 		"@types/mocha": "^8.0.4",
-		"@types/node": "^12.19.11",
+		"@types/node": "^16",
 		"@types/vscode": "^1.52.0",
 		"@typescript-eslint/eslint-plugin": "^4.9.0",
 		"@typescript-eslint/parser": "^4.9.0",

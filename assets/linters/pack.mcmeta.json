@@ -1,34 +1,39 @@
 {
     "type": "object",
     "$schema": "https://json-schema.org/draft-07/schema",
-    "$id": "https://raw.githubusercontent.com/haima16/texture-json/master/src/pack.mcmeta.json",
     "title": "Resource pack information",
-    "description": "资源包的描述信息",
-    "additionalProperties": false,
+    "description": "提供资源包的描述信息",
     "defaultSnippets": [
         {
             "label": "快速生成pack.mcmeta",
-            "prefix": "pack",
+            "prefix": "init",
             "body": {
                 "pack": {
-                    "description": "${1:${TM_DIRECTORY/(?:.*[\\\\/])?([^\\\\/]*)/$1/}}: $2",
-                    "pack_format": 4
+                    "description": "$1",
+                    "pack_format": 12
                 }
             }
         }
     ],
     "properties": {
+        "__comment": {
+            "type": "string",
+            "description": "注释"
+        },
         "pack": {
             "type": "object",
-            "additionalProperties": false,
-            "title": "pack",
+            "title": "包",
             "description": "资源包的描述信息",
             "properties": {
+                "__comment": {
+                    "type": "string",
+                    "description": "注释"
+                },
                 "pack_format": {
-                    "default": 4,
+                    "default": 12,
                     "type": "integer",
                     "title": "资源包的版本",
-                    "description": "数字4代表1.13版本"
+                    "description": "1 -> v1.6.1 ~ v1.8.9\n 2 -> v1.9 ~ v1.10.2\n 3 -> v1.11 ~ v1.12.2\n 4 -> v1.13 ~ v1.14.4\n 5 -> v1.15 ~ v1.16.1\n 6 -> v1.16.2 ~ v1.16.5\n 7 -> v1.17 ~ v1.17.1\n 8 -> v1.18 ~ v1.18.2\n 9 -> v1.6.1 ~ v1.8.9\n 10 -> v1.19 ~ v1.19.2\n 11 -> v1.19.3(22w11a) ~ v1.19.3(22w44a)\n 12 -> v1.19.3(22w45a) ~ \n"
                 },
                 "description": {
                     "$ref": "./shared/text_component.json#",
@@ -37,6 +42,57 @@
                 }
             },
             "required": ["pack_format", "description"]
+        },
+        "language": {
+            "type": "object",
+            "title": "语言",
+            "description": "包含了要向语言菜单里添加的附加语言",
+            "properties": {
+                "__comment": {
+                    "type": "string",
+                    "description": "注释"
+                },
+                "name": {
+                    "type": "string",
+                    "title": "名称",
+                    "description": "语言的完整名称"
+                },
+                "region": {
+                    "type": "string",
+                    "title": "区域",
+                    "description": "国家或地区名称"
+                },
+                "bidirectional": {
+                    "type": "boolean",
+                    "title": "朝向",
+                    "description": "语言将会从右到左显示"
+                }
+            },
+            "required": ["name", "region"]
+        },
+        "filter": {
+            "type": "array",
+            "title": "过滤器",
+            "description": "包过滤器",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "__comment": {
+                        "type": "string",
+                        "description": "注释"
+                    },
+                    "namespace": {
+                        "type": "string",
+                        "title": "命名空间",
+                        "description": "要匹配的命名空间。若省略则匹配所有命名空间"
+                    },
+                    "path": {
+                        "type": "string",
+                        "title": "路径",
+                        "description": "要匹配的路径。若省略则匹配所有路径"
+                    }
+                }
+            }
         }
     },
     "required": ["pack"]

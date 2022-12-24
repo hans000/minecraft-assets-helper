@@ -1,0 +1,181 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "type": "object",
+    "description": "提供每个字符对应的资源位置和额外信息的列表",
+    "defaultSnippets": [
+        {
+            "label": "快速生成font.json",
+            "prefix": "init",
+            "body": {
+                "providers": [
+                    {
+                        "type": "bitmap",
+                        "file": "$1",
+                        "height": 12,
+                        "ascent": 0,
+                        "chars": []
+                    }
+                ]
+            }
+        }
+    ],
+    "properties": {
+        "providers": {
+            "type": "array",
+            "description": "字体信息的列表",
+            "items": {
+                "oneOf": [
+                    {
+                        "$ref": "#/definitions/bitmap"
+                    },
+                    {
+                        "$ref": "#/definitions/legacy_unicode"
+                    },
+                    {
+                        "$ref": "#/definitions/ttf"
+                    },
+                    {
+                        "$ref": "#/definitions/space"
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "bitmap": {
+            "type": "object",
+            "properties": {
+                "__comment": {
+                    "type": "string",
+                    "description": "注释"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "位图字体",
+                    "enum": [
+                        "bitmap"
+                    ]
+                },
+                "file": {
+                    "type": "string",
+                    "title": "文件",
+                    "description": "文件的资源位置，以assets/<namespace>/textures开始"
+                },
+                "height": {
+                    "type": "integer",
+                    "title": "高度",
+                    "description": "字符的高度，以像素为单位。可以为负。该标签与源纹理中使用的区域不相关，仅用于重新调整显示结果"
+                },
+                "ascent": {
+                    "type": "integer",
+                    "description": "字体的上伸高度（基线至最高点的距离），以像素为单位。 这个值会使得字体的显示结果出现垂直偏移"
+                },
+                "chars": {
+                    "type": "array",
+                    "title": "字符列表",
+                    "description": "一个字符串列表，包含该字体替换的字符及其在纹理中的位置。列表所有元素的字符数必须相同。该列表中的一项元素对应纹理等距分割的一行，每一个元素中的字符对应等距的一列。",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "legacy_unicode": {
+            "type": "object",
+            "properties": {
+                "__comment": {
+                    "type": "string",
+                    "description": "注释"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "旧版Unicode字体。该字体格式已废弃且仅在“强制Unicode字体”选项打开时才会优先使用",
+                    "enum": [
+                        "legacy_unicode"
+                    ]
+                },
+                "sizes": {
+                    "type": "string",
+                    "description": "assets/<namespace>/font目录下的资源位置，给出一个描述每个字符的水平起讫位置（从0至15）的二进制文件。目标文件的拓展名必须为.bin"
+                },
+                "template": {
+                    "type": "string",
+                    "description": "assets/<namespace>/textures目录下的资源位置，给出该字体应当使用的纹理文件。游戏会将该标签中的%s 替换为被替换字符的十六进制代码的前两个字符，因此单个此种类的字体提供者可以指向多个贴图文件"
+                }
+            }
+        },
+        "ttf": {
+            "type": "object",
+            "properties": {
+                "__comment": {
+                    "type": "string",
+                    "description": "注释"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "TrueType字体",
+                    "enum": [
+                        "ttf"
+                    ]
+                },
+                "file": {
+                    "type": "string",
+                    "title": "文件",
+                    "description": "assets/<namespace>/font目录下的TrueType字体文件的资源位置"
+                },
+                "shift": {
+                    "type": "array",
+                    "additionalItems": false,
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "number"
+                        }
+                    ]
+                },
+                "size": {
+                    "type": "number",
+                    "title": "大小",
+                    "description": "渲染的字体大小"
+                },
+                "oversample": {
+                    "type": "number",
+                    "description": "渲染的分辨率"
+                },
+                "skip": {
+                    "type": "number",
+                    "description": "排除的字符串或字符串数组"
+                }
+            }
+        },
+        "space": {
+            "type": "object",
+            "properties": {
+                "__comment": {
+                    "type": "string",
+                    "description": "注释"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "将指定的字符显示为空格",
+                    "enum": [
+                        "space"
+                    ]
+                },
+                "advances": {
+                    "type": "object",
+                    "description": "空格的宽度",
+                    "patternProperties": {
+                        "^.+$": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

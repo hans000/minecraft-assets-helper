@@ -1,0 +1,77 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "type": "object",
+    "description": "动态材质的配置信息",
+    "defaultSnippets": [
+        {
+            "label": "快速生成animation mcmeta",
+            "prefix": "init",
+            "body": {
+                "animation": {
+                    "frametime": 2,
+                    "frames": []
+                }
+            }
+        }
+    ],
+    "properties": {
+        "__comment": {
+            "type": "string",
+            "description": "注释"
+        },
+        "animation": {
+            "type": "object",
+            "title": "动画",
+            "description": "动态纹理的数据的标签",
+            "properties": {
+                "__comment": {
+                    "type": "string",
+                    "description": "注释"
+                },
+                "interpolate": {
+                    "type": "boolean",
+                    "description": "若为 true，Minecraft 将会在帧与帧之间生成一张间隔时间大于1的帧，默认为false"
+                },
+                "width": {
+                    "type": "integer",
+                    "description": "方块的宽度\n以直接比例而不是像素为单位。这在原版中没有使用，但是可以被mod使用以具有不是完整正方形的帧"
+                },
+                "height": {
+                    "type": "integer",
+                    "description": "方块的高度\n以直接比例而不是像素为单位。这在原版中没有使用，但是可以被mod使用以具有不是完整正方形的帧"
+                },
+                "frametime": {
+                    "type": "integer",
+                    "description": "设置在每个游戏刻内每一帧的时间增量。默认为1"
+                },
+                "frames": {
+                    "type": "array",
+                    "description": "一个帧列表\n帧的显示顺序默认为从上至下",
+                    "oneOf": [
+                        {
+                            "type": "integer",
+                            "description": "指定开始播放的帧的位置，最上面的一帧为 0"
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "__comment": {
+                                    "type": "string",
+                                    "description": "注释"
+                                },
+                                "index": {
+                                    "type": "integer",
+                                    "description": "指定开始播放的帧的位置，最上面的一帧为0"
+                                },
+                                "time": {
+                                    "type": "integer",
+                                    "description": "这一帧的显示时间（单位：刻），覆盖的“frametime”"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,95 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+        "credit": {
+            "type": "string",
+            "title": "著作声明",
+            "description": "模型的著作声明"
+        },
+        "texture_size": {
+            "$ref": "#/definitions/vector2",
+            "title": "材质大小",
+            "description": "[x, y]为纹理分辨率。用于标识Blockbench中将要使用怎么样分辨率的uv编辑器。默认为16x16。当使用组合型uv或者扩大分辨率时会用到。"
+        },
+        "groups": {
+            "type": "array",
+            "title": "分组",
+            "description": "用于归并元素的组合，元素的组将显示在blockbench的右下方。列表的值为数字和{组对象}。这个数字是元素的组序号，也就是元素在\"elements\":[]列表中的序号",
+            "items": {
+                "oneOf": [
+                    {
+                        "type": "integer"
+                    },
+                    {
+                        "$ref": "#/definitions/group-item"
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "vector2": {
+            "type": "array",
+            "additionalItems": false,
+            "minItems": 2,
+            "maxItems": 2,
+            "items": [
+                {
+                    "type": "integer"
+                },
+                {
+                    "type": "integer"
+                }
+            ]
+        },
+        "vector3": {
+            "type": "array",
+            "additionalItems": false,
+            "minItems": 3,
+            "maxItems": 3,
+            "items": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "number"
+                }
+            ]
+        },
+        "group-item": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "是显示在blockbench右下方的组名"
+                },
+                "shade": {
+                    "type": "boolean",
+                    "description": ""
+                },
+                "origin": {
+                    "$ref": "#/definitions/vector3",
+                    "description": "[x, y, z]是一个有3个数字的列表，这三个数就是本组总枢轴点，用于相对于组的旋转操作"
+                },
+                "children": {
+                    "type": "array",
+                    "description": "子元素",
+                    "items": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/definitions/group-item"
+                            },
+                            {
+                                "type": "integer"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

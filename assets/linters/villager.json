@@ -1,0 +1,28 @@
+{
+    "type": "object",
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "properties": {
+        "__comment": {
+            "type": "string",
+            "description": "注释"
+        },
+        "villager": {
+            "type": "object",
+            "description": "纹理数据",
+            "properties": {
+                "__comment": {
+                    "type": "string",
+                    "description": "注释"
+                },
+                "hat": {
+                    "type": "string",
+                    "enum": [
+                        "full",
+                        "partial"
+                    ],
+                    "description": "村民种类的帽子图层是否仍完整渲染（默认）"
+                }
+            }
+        }
+    }
+}

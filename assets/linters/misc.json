@@ -1,0 +1,27 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+        "texture": {
+            "type": "object",
+            "description": "包含了纹理的数据",
+            "properties": {
+                "blur": {
+                    "type": "boolean",
+                    "description": "指定从近距离观察时是否导致纹理模糊。默认为false"
+                },
+                "clamp": {
+                    "type": "boolean",
+                    "description": "指定是否在原来的情况下以伸展纹理代替平铺纹理。默认为false"
+                },
+                "mipmaps": {
+                    "type": "array",
+                    "description": "纹理的自定义mipmap值",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
+        }
+    }
+}

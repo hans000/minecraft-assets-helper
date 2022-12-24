@@ -1,0 +1,116 @@
+{
+    "type": "object",
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "properties": {
+        "targets": {
+            "oneOf": [
+                {
+                    "type": "string",
+                    "description": "渲染目标的名称"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "__comment": {
+                            "type": "string",
+                            "description": "注释"
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "要添加的渲染目标的名称"
+                        },
+                        "width": {
+                            "type": "integer",
+                            "description": "渲染目标的宽度"
+                        },
+                        "height": {
+                            "type": "integer",
+                            "description": "渲染目标的高度"
+                        }
+                    }
+                }
+            ]
+        },
+        "passes": {
+            "type": "array",
+            "description": "过程的列表",
+            "items": {
+                "type": "object",
+                "description": "渲染过程",
+                "properties": {
+                    "__comment": {
+                        "type": "string",
+                        "description": "注释"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "应用于输入并发布到输出的程序着色器的名称。使用“blit”将数据从intarget复制到outtarget"
+                    },
+                    "intarget": {
+                        "type": "string",
+                        "description": "要用作输入的渲染目标的名称。可使用minecraft:main指定为游戏屏幕"
+                    },
+                    "outtarget": {
+                        "type": "string",
+                        "description": "要输出到的渲染目标的名称。它不应与intarget相同。可使用minecraft:main指定为游戏屏幕"
+                    },
+                    "auxtargets": {
+                        "type": "array",
+                        "description": "辅助目标的列表",
+                        "items": {
+                            "type": "object",
+                            "description": "辅助目标",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "description": "传递到程序JSON中的辅助目标的名称"
+                                },
+                                "id": {
+                                    "type": "string",
+                                    "description": "辅助目标的id。指向targets中定义的缓冲区名称，或指向assets/<namespace>/textures/effect下的纹理位置（使用命名空间ID引用）。在缓冲区名称后添加:depth可访问其深度缓冲。例如，要访问minecraft:main的深度缓冲，应填minecraft:main:depth"
+                                },
+                                "width": {
+                                    "type": "integer",
+                                    "description": "如果id引用纹理，则为必需。以像素为单位描述纹理的宽度"
+                                },
+                                "height": {
+                                    "type": "integer",
+                                    "description": "如果id引用纹理，则为必需。以像素为单位描述纹理的高度"
+                                },
+                                "bilinear": {
+                                    "type": "boolean",
+                                    "description": "如果id引用纹理，则为必需。确定用于图像的缩放算法是双线性还是最近邻"
+                                }
+                            }
+                        }
+                    },
+                    "uniforms": {
+                        "type": "array",
+                        "description": "要重写的字段的列表，用于更改程序JSON中uniforms列表中的值",
+                        "items": {
+                            "type": "object",
+                            "description": "一个uniform项",
+                            "properties": {
+                                "__comment": {
+                                    "type": "string",
+                                    "description": "注释"
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "description": "应更改的字段的名称"
+                                },
+                                "values": {
+                                    "type": "array",
+                                    "description": "字段应更改为的值",
+                                    "items": {
+                                        "type": "number"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

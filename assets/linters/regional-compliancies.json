@@ -1,0 +1,42 @@
+{
+    "type": "object",
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "patternProperties": {
+        "^.+$": {
+            "$ref": "#/definitions/region"
+        }
+    },
+    "definitions": {
+        "region": {
+            "type": "array",
+            "description": "一个警告列表",
+            "items": {
+                "type": "object",
+                "description": "一个region项",
+                "properties": {
+                    "__comment": {
+                        "type": "string",
+                        "description": "注释"
+                    },
+                    "delay": {
+                        "type": "integer",
+                        "description": "展示信息的延迟时间，单位分钟，不能为0"
+                    },
+                    "period": {
+                        "type": "integer",
+                        "description": "展示信息的周期性时间，单位分钟，不能为0"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "标题"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "描述信息"
+                    }
+                },
+                "required": ["title", "message", "period"]
+            }
+        }
+    }
+}
