@@ -2,7 +2,7 @@
 	"name": "minecraft-assets-helper",
 	"displayName": "Minecraft Assets Helper",
 	"publisher": "hans000",
-	"description": "This extension features that can be used to improve productivity for CBer.",
+	"description": "This extension features that can be used to improve productivity about minecraft resource pack for CBer.",
 	"version": "1.1.0",
 	"engines": {
 		"vscode": "^1.52.0"
@@ -11,6 +11,13 @@
 		"Linters",
 		"Other"
 	],
+    "keywords": [
+        "minecraft",
+        "resource pack",
+        "assets",
+        "datapack",
+        "commands"
+    ],
 	"repository": {
 		"url": "https://github.com/hans000/minecraft-assets-helper.git"
 	},

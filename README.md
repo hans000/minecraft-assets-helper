@@ -16,7 +16,7 @@ You can install it from the [VSCode Marketplace](https://marketplace.visualstudi
 
 ## Completions
 
-The extension can compute completions as you typing commands. Completions will automatically show if you commit one of these characters: ['/', '"', '"'].
+The extension can compute completions as you typing commands. Completions will automatically show if you commit one of these characters: ['/', ':', '"'].
 
 Alternatively you can use `Ctrl + Space` (or other configured hotkey) to show completions manually.
 
@@ -42,7 +42,7 @@ It can help you verify the validity of the JSON file and display error messages 
 
 ## Create Cached Files
 
-ctrl + shift + p, input `createCachedFiles`
+ctrl + shift + p, input `createCachedFiles` text and press `enter`.
 
 **Enjoy!**
 
