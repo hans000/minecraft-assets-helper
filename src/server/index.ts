@@ -20,6 +20,21 @@ let hasWorkspaceFolderCapability = false
 let hasDiagnosticRelatedInformationCapability = false
 
 connection.onInitialize((params: InitializeParams) => {
+
+    const folders = params.workspaceFolders || []
+    for (const folder of folders) {
+        const dirname = fileURLToPath(folder.uri)
+        if (isAssetPack(dirname) || isMultiAssetsPack(dirname)) {
+            globalSettings.isAssetProject = true
+        }
+    }
+
+    if (! globalSettings.isAssetProject) {
+        return {
+            capabilities: {}
+        } as InitializeResult
+    }
+
     const capabilities = params.capabilities
     hasConfigurationCapability = !!(
         capabilities.workspace && !!capabilities.workspace.configuration
@@ -91,13 +106,6 @@ connection.onInitialized(async () => {
     }
     if (hasWorkspaceFolderCapability) {
         folders = await connection.workspace.getWorkspaceFolders() || []
-
-        for (const folder of folders) {
-            const dirname = fileURLToPath(folder.uri)
-            if (isAssetPack(dirname) || isMultiAssetsPack(dirname)) {
-                globalSettings.isAssetProject = true
-            }
-        }
 
         if (! globalSettings.isAssetProject) {
             return
