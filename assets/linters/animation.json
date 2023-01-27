@@ -47,29 +47,31 @@
                 "frames": {
                     "type": "array",
                     "description": "一个帧列表\n帧的显示顺序默认为从上至下",
-                    "oneOf": [
-                        {
-                            "type": "integer",
-                            "description": "指定开始播放的帧的位置，最上面的一帧为 0"
-                        },
-                        {
-                            "type": "object",
-                            "properties": {
-                                "__comment": {
-                                    "type": "string",
-                                    "description": "注释"
-                                },
-                                "index": {
-                                    "type": "integer",
-                                    "description": "指定开始播放的帧的位置，最上面的一帧为0"
-                                },
-                                "time": {
-                                    "type": "integer",
-                                    "description": "这一帧的显示时间（单位：刻），覆盖的“frametime”"
+                    "items": {
+                        "oneOf": [
+                            {
+                                "type": "integer",
+                                "description": "指定开始播放的帧的位置，最上面的一帧为 0"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "__comment": {
+                                        "type": "string",
+                                        "description": "注释"
+                                    },
+                                    "index": {
+                                        "type": "integer",
+                                        "description": "指定开始播放的帧的位置，最上面的一帧为0"
+                                    },
+                                    "time": {
+                                        "type": "integer",
+                                        "description": "这一帧的显示时间（单位：刻），覆盖的“frametime”"
+                                    }
                                 }
                             }
-                        }
-                    ]
+                        ]
+                    }
                 }
             }
         }

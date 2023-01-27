@@ -51,8 +51,10 @@ export class BaseRequest {
             return
         }
 
-        const node = findAtPosition(ast, { lineNumber: this.position.line + 1, column: this.position.character + 1 })
-        return node
+        try {
+            const node = findAtPosition(ast, { lineNumber: this.position.line + 1, column: this.position.character + 1 })
+            return node
+        } catch (error) {}
     }
 
     protected getAst() {

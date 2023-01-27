@@ -111,7 +111,11 @@ export class DiagnosticRequest extends BaseRequest {
                 try {
                     const nodes = getNodesByPath(this.node!, config.pattern)
                     nodes.forEach(node => {
+                        // 添加白名单
                         if ((node.value as string).startsWith('#')) {
+                            return
+                        }
+                        if (['builtin/generated', 'builtin/entity'].includes((node.value as string))) {
                             return
                         }
                         const range = toRange(node)
